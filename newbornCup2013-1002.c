@@ -7,8 +7,6 @@ ALGORITHM:
 2.Use the "String array subscript sort" algorithm to calculate the frequency of the character
 3.Judge the number frequency is same or not
 4.How to let the code more effective?
-
-Have a bug waitting for be solved
 */
 #include<stdio.h>
 #include<stdlib.h>
@@ -19,36 +17,40 @@ int subSort(char *str1,char *str2)
 {
 	int i = 0;
 	int a=0,b=0;
+	
 	//Define the array which use to store the number frequency
 	int subSortStr1[60]={0};
 	int subSortStr2[60]={0};
+	
 	//Intermediate character
 	char ch1,ch2;
+	
 	//Define a variable to judge the string is brother string or not
 	int x=0;
+	
 	//Store the character data respectively
 	for( i=0 ; *(str1+i)!='\0' ; i++ )
 	{
 		ch1=*(str1+i);
 		ch2=*(str2+i);
 
-        a=ch1-'A';
-        b=ch2-'A';
-
+        	a=ch1-'A';
+	 	b=ch2-'A';
+	 	
+	 	//To find out the int array is same or not
 		subSortStr1[a]++;
 		subSortStr2[b]++;
 	}
-	//Judge the number frequency is same or not
-	//To find out the int array is same or not
 	for ( i=0; i<60 ; i++)
 	{
+	    //Judge the number frequency is same or not
 	    if(subSortStr1[i]==subSortStr2[i])
-            x=0;
-        else
-        {
-            x=1;
-            break;
-        }
+            	x=0;
+            else
+            {
+       		x=1;
+     		break;
+     	     }
 	}
 	if(x==0)
 		return 1;
