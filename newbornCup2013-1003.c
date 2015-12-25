@@ -1,6 +1,6 @@
 /*
 kliorange
-2015.12.22 02:28-
+2015.12.22 02:28-02:45
 ZHBIT ACM 2013-1003 <Eliminate Game>
 ALGORITHM:
 1.Use array to solve the problem.
@@ -20,6 +20,7 @@ void eliminateChar(char *str,char *elimi)
 	{
 		for( j=0 ; *(str+j)!='\0' ; j++ )
 		{
+			//Change the character to "1" when the character need be eliminabte
 			if( *(elimi+i)==*(str+j) )
 				*(str+j)='1';
 		}
@@ -46,10 +47,13 @@ int main()
 {
 	int T=0;
 	int j=0;
+	
 	//Use array to solve the problem
 	char str[101];
+	
 	//Use another array to store the characters which need to eliminate
 	char eliminate[101];
+	
 	//Input the data about T
 	while(scanf("%d",&T)!=EOF)
 	{
@@ -58,15 +62,13 @@ int main()
 		{
 			scanf("%s",str);
 			scanf("%s",eliminate);
+			
 			//To eliminate the chartacters
 			eliminateChar(str,eliminate);
+			
 			//Output the data
 			passOnePrintf(str);
 		}
 	}
-
-
-	//Change the character to "1" when the character need be eliminabte
-
 	return 0;
 }
