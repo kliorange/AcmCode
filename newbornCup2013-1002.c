@@ -16,7 +16,6 @@ ALGORITHM:
 int subSort(char *str1,char *str2)
 {
 	int i = 0;
-	int a=0,b=0;
 	
 	//Define the array which use to store the number frequency
 	int subSortStr1[60]={0};
@@ -33,13 +32,9 @@ int subSort(char *str1,char *str2)
 	{
 		ch1=*(str1+i);
 		ch2=*(str2+i);
-
-        	a=ch1-'A';
-	 	b=ch2-'A';
-	 	
 	 	//To find out the int array is same or not
-		subSortStr1[a]++;
-		subSortStr2[b]++;
+		subSortStr1[ch1-'A']++;
+		subSortStr2[ch2-'A']++;
 	}
 	for ( i=0; i<60 ; i++)
 	{
