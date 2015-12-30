@@ -34,7 +34,7 @@ int main()
 	int gcd(int a, int b);
 	while(scanf("%d",&N)!=EOF)						//Store N data
 	{
-		p=(int*)malloc(N*sizeof(int));				//Dynamic memory allocation. Store in heap(¶Ñ)
+		p=(int*)malloc(N*sizeof(int));				//Dynamic memory allocation. Store in heap(å †)
 
 		for( i=0 ; i<N ; i++)					    //Store the data
 			scanf("%d",p+i);
