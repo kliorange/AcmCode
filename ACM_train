@@ -1,0 +1,116 @@
+
+#include <cstdio>
+#include <math.h>
+#include <queue>
+using namespace std;
+struct Node
+{
+	char number[4];
+	int flag;
+};
+
+char number1[4];
+char number2[4];
+char Temp;
+
+int main()
+{
+	int T = 0;
+	int s = 0;
+	int sum = 0;
+	int bfs(Node curr);
+	Node src;
+	scanf("%d", &T);
+	getchar();
+
+	while (T--)
+	{
+		sum = 0;
+		for (int i = 0; i<4; i++)
+			scanf("%c", &number1[i]);
+		getchar();
+		for (int i = 0; i<4; i++)
+			scanf("%c", &number2[i]);
+		getchar();
+		src.number[0] = number1[0];
+		src.number[1] = number1[1];
+		src.number[2] = number1[2];
+		src.number[3] = number1[3];
+		src.flag = 0;
+
+		printf("%d\n",bfs(src));
+	}
+	return 0;
+}
+
+int bfs(Node curr)
+{
+	queue<Node> q;
+	q.push(curr);
+	while (!q.empty())
+	{
+		Node next;
+		int i = 0;
+		while (i < 11)
+		{
+			switch (i)
+			{
+			case 0:
+				next.number[0]++;
+				next.flag=curr.flag+1;
+				break;
+			case 1:
+				next.number[1]++;
+				next.flag = curr.flag + 1;
+				break;
+			case 2:
+				next.number[2]++;
+				next.flag = curr.flag + 1;
+				break;
+			case 3:
+				next.number[3]++;
+				next.flag = curr.flag + 1;
+				break;
+			case 4:
+				next.number[0]--;
+				next.flag = curr.flag + 1;
+				break;
+			case 5:
+				next.number[1]--;
+				next.flag = curr.flag + 1;
+				break;
+			case 6:
+				next.number[2]--;
+				next.flag = curr.flag + 1;
+				break;
+			case 7:
+				next.number[3]--;
+				next.flag = curr.flag + 1;
+				break;
+			case 8:
+				Temp = next.number[0];
+				next.number[0] = next.number[1];
+				next.number[1] = Temp;
+				next.flag = curr.flag + 1;
+				break;
+			case 9:
+				Temp = next.number[1];
+				next.number[1] = next.number[2];
+				next.number[2] = Temp;
+				next.flag = curr.flag + 1;
+				break;
+			case 10:
+				Temp = next.number[2];
+				next.number[2] = next.number[3];
+				next.number[3] = Temp;
+				next.flag = curr.flag + 1;
+				break;
+			}
+			if (next.number[0] == number2[0] && next.number[1] == number2[1] && next.number[2] == number2[2] && next.number[3] == number2[3])
+				return next.flag;
+			else
+				bfs(next);
+			i++;
+		}
+	}
+}
