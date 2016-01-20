@@ -1,51 +1,44 @@
 #include <stdio.h>
-#include <math.h>
 
-int M, N;
-int x, y;
-int boss[10000001];
-int f[10000001];
+int f[30001], x[30001], boss[30001];
+
 
 int main()
 {
-	int max = 0;
-	int find(int t);
+	int n = 0, m = 0, p = 0;
 	void combine(int a, int b);
-	while (scanf("%d", &N) != EOF)
+	int find(int t);
+	while (scanf("%d %d", &n, &m), n != 0 || m != 0)
 	{
-		//初始化
-		for (int i = 1; i <= 10000000; i++)
+		for (int i = 0; i < 30000; i++)
 		{
-			f[i] = i;
 			boss[i] = 0;
+			f[i] = i;
 		}
-		max = 0;
 
-
-		for (int i = 1; i <= N; i++)
+		for (int i = 0; i<m; i++)
 		{
-			scanf("%d %d", &x, &y);
-			if (find(x) != find(y))
-				combine(x, y);
+			scanf("%d", &p);
+			for (int j = 0; j<p; j++)
+			{
+				scanf("%d", &x[j]);
+			}
+
+			for (int j = 0; j<p; j++)
+			{
+				if (j + 1<p && find(x[j]) != find(x[j + 1]))
+					combine(x[j], x[j + 1]);
+			}
 		}
 
-		for (int i = 1; i <= 10000000; i++)
+		for (int i = 0; i < 30000; i++)
 			boss[find(i)]++;
-
 		//找boss数组中最大的集合，输出
-		for (int i = 1; i <= 10000000; i++)
-		{
-			if (max < boss[i])
-				max = boss[i];
-		}
-		printf("%d\n", max);
-
+		printf("%d\n", boss[find(0)]);
 	}
 	return 0;
 }
 
-
-//老大联谊
 void combine(int a, int b)
 {
 	int find(int t);
