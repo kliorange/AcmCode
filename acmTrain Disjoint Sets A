@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+
+int f[1005];
+int M, N;
+int x, y;
+int sum;
+
+void combine(int a, int b)
+{
+	f[a] = b;
+	return;
+}
+
+//找老大
+int find(int t)
+{
+	if (f[t] == t)
+		return t;
+	else
+		return f[t] = find(f[t]);
+}
+
+int main()
+{
+	int find(int t);
+	void combine(int a, int b);
+	while (scanf("%d", &N), N != 0)
+	{
+		scanf("%d", &M);
+		//初始化
+		sum = 0;
+		for (int i = 0; i <= N; i++)
+			f[i] = i;
+
+		//读入M条道路数据
+		for (int i = 1; i <= M; i++)
+		{
+			scanf("%d %d", &x, &y);
+			//除去1,2和2,1导致死循环的情况
+
+			if (find(x) != find(y))
+				combine(find(x), find(y));
+		}
+
+		//让每个城镇认识老大
+		for (int i = 1; i <= N; i++)
+			f[i] = find(i);
+
+		//找到老大后，联谊
+		for (int j = 1; j <= N; j++)
+		{
+			if (f[j] == j)
+				sum++;
+		}
+
+		printf("%d\n", sum - 1);
+	}
+	return 0;
+}
