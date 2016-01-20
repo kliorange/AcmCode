@@ -1,0 +1,83 @@
+
+#include <stdio.h>
+int T = 0, N = 0, M = 0, u = 0, v = 0;
+struct
+{
+	int f;
+	int y;
+}Ms[50001];
+char UX;
+int UW;
+
+int main()
+{
+	int a = 0, b = 0;
+	void combine(int a, int b);
+	int searchAnswer(int a);
+	int find(int t);
+	scanf("%d", &T);
+	for (int i = 1; i <= T; i++)
+	{
+		printf("Case #%d:\n", i);
+		scanf("%d", &N);
+		//初始化
+		for (int j = 1; j <= N; j++)
+		{
+			Ms[j].f = j;
+			Ms[j].y = 0;
+		}
+		for (int j = 1; j <= (N - 1); j++)
+		{
+			scanf("%d %d", &u, &v);
+			Ms[u].f = v;
+		}
+		scanf("%d", &M);
+		for (int j = 1; j <= M; j++)
+		{
+			while (1)
+			{
+				scanf("%c", &UX);
+				if (UX == ' ' || UX == '\0' || UX == '\n')
+				{
+				}
+				else
+					break;
+			}
+			if (UX == 'T')
+			{
+				scanf("%d %d", &a, &b);
+				Ms[a].y = b;
+			}
+			else if (UX == 'C')
+			{
+				scanf("%d", &a);
+				UW = searchAnswer(Ms[a].f);
+				if (UW == 0)
+					printf("-1\n");
+				else
+					printf("%d\n", UW);
+			}
+		}
+	}
+	return 0;
+}
+
+
+
+int searchAnswer(int a)
+{
+	if (Ms[a].f = a)
+		return Ms[a].y;
+	else
+		return searchAnswer(Ms[a].f);
+}
+
+
+//找老大
+int find(int t)
+{
+	if (Ms[t].f == t)
+		return t;
+	else
+		return find(Ms[t].f);
+}
