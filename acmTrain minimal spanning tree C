@@ -1,0 +1,90 @@
+#include <cstdio>
+#include <algorithm>
+#define INF 0x3f3f3f3f
+using namespace std;
+
+struct Node
+{
+	int u, v, w, cc;
+	bool operator < (const Node& rhs) const //重载比较运算符
+	{
+		return w < rhs.w;		      		//根据边值从小到大排序
+	}
+
+
+}village[5000];
+
+int f[101];
+
+int N = 0, M = 0, s = 0;
+int ans = 0, cnt = 0;//ans means answer,ant means the side which has fought.
+int find1(int t)
+{
+	if (f[t] == t)
+		return t;
+	else
+		return find1(f[t]);
+}
+
+void combine(int a, int b)
+{
+	int x = find1(a);
+	int y = find1(b);
+	f[x] = y;
+	return;
+}
+
+
+int kruskal()
+{
+	sort(village + 1, village + M + 1);
+	for (int i = 1; i <= M; i++)
+	{
+		int x = find1(village[i].u);
+		int y = find1(village[i].v);
+		if (x != y)
+		{
+			ans += village[i].w;
+			cnt++;
+			if (cnt == N - 1)
+				break;
+			combine(village[i].u, village[i].v);
+		}
+	}
+	if (cnt != N - 1)
+		return -1;
+	return ans;
+}
+
+
+int main()
+{
+
+	while (scanf("%d", &N), N != 0)
+	{
+		M = N*(N - 1) / 2;
+		ans = 0, cnt = 0;
+		for (int i = 1; i <= N; i++)
+			f[i] = i;
+
+		for (int i = 1; i <= M; i++)
+			village[i].cc = 0;
+
+		//initialize
+		if (M == 0)
+			printf("0\n");
+		else
+		{
+			for (int i = 1; i <= M; i++)
+			{
+				scanf("%d %d %d", &village[i].u, &village[i].v, &village[i].w);
+			}
+			s = kruskal();
+			if (s == -1)
+				printf("?\n");
+			else
+				printf("%d\n", s);
+		}
+
+	}
+}
