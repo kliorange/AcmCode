@@ -1,0 +1,104 @@
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#define INF 0x3f3f3f3f
+using namespace std;
+
+struct Node
+{
+	int u, v, w;
+	bool operator < (const Node& rhs) const //重载比较运算符
+	{
+		return w < rhs.w;		      		//根据边值从小到大排序
+	}
+
+
+}village[5500];
+
+int f[1001];
+
+int N = 0, M = 0, s = 0, Q = 0;
+int graph[102][102];
+int ans = 0, cnt = 0;//ans means answer,ant means the side which has fought.
+int find1(int t)
+{
+	if (f[t] == t)
+		return t;
+	else
+		return f[t] = find1(f[t]);
+}
+
+void combine(int a, int b)
+{
+	int x = find1(a);
+	int y = find1(b);
+	f[x] = y;
+	return;
+}
+
+
+int kruskal(int t)
+{
+	sort(village + 1, village + t);
+	for (int i = 1; i < t; i++)
+	{
+		int x = find1(village[i].u);
+		int y = find1(village[i].v);
+		if (x != y)
+		{
+			ans += village[i].w;
+			cnt++;
+			if (cnt == N - 1)
+				break;
+			combine(village[i].u, village[i].v);
+		}
+	}
+	if (cnt != N - 1)
+		return -1;
+	return ans;
+}
+
+
+int main()
+{
+	int a = 0, b = 0;
+	int xx = 0;//Eat '0'
+	int t = 0;
+	while (scanf("%d", &N) != EOF)
+	{
+		ans = 0, cnt = 0, t = 1;
+		memset(graph, 0, sizeof(graph));
+		for (int i = 1; i <= N; i++)
+			f[i] = i;
+
+		for (int i = 1; i <= N; i++)
+		{
+			for (int j = 1; j <= N; j++)
+			{
+				scanf("%d", &graph[i][j]);
+			}
+		}
+
+		scanf("%d", &Q);
+		for (int i = 1; i <= Q; i++)
+		{
+			a = 0;
+			b = 0;
+			scanf("%d %d", &a, &b);
+			graph[a][b] = graph[b][a] = 0;
+		}
+		for (int i = 1; i <= N; i++)
+		{
+			for (int j = i+1; j <= N; j++)
+			{
+					village[t].u = i;
+					village[t].v = j;
+					village[t].w = graph[i][j];
+					t++;
+			}
+		}
+		s = kruskal(t);
+		printf("%d\n", s);
+	}
+}
