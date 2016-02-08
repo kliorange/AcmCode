@@ -1,0 +1,104 @@
+#include <math.h>
+#include <stdio.h>
+#include <algorithm>
+using namespace std;
+
+struct  Node
+{
+	int u, v;
+	double w;
+	bool operator < (const Node& rhs) const //重载比较运算符
+	{
+		return w < rhs.w;		      		//根据边值从小到大排序
+	}
+
+
+}village[250000];
+
+struct
+{
+	int x, y;
+}point[505];
+
+int f[505];
+double Xcode[505];
+double  sum = 0;
+int N = 0;
+int S = 0, P = 0;
+int flag = 0;
+double ans = 0, temp = 0;//ans means answer,ant means the side which has fought.
+int find1(int t)
+{
+	if (f[t] == t)
+		return t;
+	else
+		return f[t] = find1(f[t]);
+}
+
+void combine(int a, int b)
+{
+	int x = find1(a);
+	int y = find1(b);
+	f[x] = y;
+	return;
+}
+
+
+double kruskal(int t)
+{
+	int tX = 0;
+	flag = 1;
+	temp = 0;
+	sort(village + 1, village + t);
+	for (int i = 1; i <t; i++)
+	{
+		int x = find1(village[i].u);
+		int y = find1(village[i].v);
+		if (x != y)
+		{
+			combine(village[i].u, village[i].v);
+			Xcode[flag] = village[i].w;
+			flag++;
+		}
+	}
+	tX = flag -- ;
+	for (Xcode[tX]; tX >= 1; tX--)
+	{
+		if (tX == P - S)
+			break;
+	}
+	return Xcode[tX];
+}
+
+
+int main()
+{
+	int t = 0;
+	scanf("%d", &N);
+	while (N)
+	{
+		sum = ans = 0, t = 1;
+		scanf("%d %d", &S, &P);
+		for (int i = 1; i <= P; i++)
+			f[i] = i;
+		for (int i = 1; i <= P; i++)
+		{
+			scanf("%d %d", &point[i].x, &point[i].y);
+		}
+		for (int i = 1; i <= P; i++)
+		{
+			for (int j = i + 1; j <= P; j++)
+			{
+				village[t].u = i;
+				village[t].v = j;
+				/*village[t].w = sqrt(pow((point[i].x - point[j].x), 2) + pow((point[i].y - point[j].y), 2));*/
+				village[t].w = sqrt(1.0 * (point[i].x - point[j].x) * (point[i].x - point[j].x) + (point[i].y - point[j].y) * (point[i].y - point[j].y));
+				t++;
+			}
+		}
+		sum = kruskal(t);
+		printf("%.2lf\n", sum);
+		N--;
+	}
+	return 0;
+}
