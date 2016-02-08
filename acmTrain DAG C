@@ -1,0 +1,84 @@
+/*
+kliorange
+2016.01.23
+Directed Acyclic Graph C
+http://acm.hust.edu.cn/vjudge/contest/viewSource.action?id=5333723
+*/
+
+#include <stdio.h>
+#include <cstring>
+#define MAXN 505
+
+int N = 0, M = 0, order = 0;
+int map[MAXN][MAXN];
+int in[MAXN];
+int num[MAXN];
+
+int	findPoint()
+{
+	for (int i = 1; i<=N; i++)
+	{
+		if (in[i] == 0)
+		{
+			num[order] = i;
+			order++;
+			in[i]--;
+			return i;
+		}
+	}
+}
+
+void deleteLine(int t)
+{
+	for (int i = 1; i <= N; i++)
+	{
+		if (map[t][i]!=0)
+		{
+			in[i] -- ;
+		}
+		map[t][i] = 0;
+	}
+	return ;
+}
+
+void topu()
+{
+	int k;
+	for (int i = 0; i<N; i++)
+	{
+		k = findPoint();
+		deleteLine(k);
+	}
+	return;
+}
+
+int main()
+{
+	int a = 0, b = 0;
+	while (scanf("%d %d", &N, &M) != EOF)
+	{
+		order = 0;
+		memset(num, 0, sizeof(num));
+		memset(map, 0, sizeof(map));
+		memset(in, 0, sizeof(in));
+		for (int k = 0; k < M; k++)
+		{
+			scanf("%d %d", &a, &b);
+			if (map[a][b]==0)
+			{
+				map[a][b]++;
+				in[b]++;
+			}
+		}
+		topu();
+		for (int i = 0; i < N - 1; i++)
+		{
+			printf("%d", num[i]);
+			printf(" ");
+		}
+		printf("%d", num[N - 1]);
+		printf("\n");
+	}
+	return 0;
+}
+
