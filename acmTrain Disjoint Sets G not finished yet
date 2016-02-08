@@ -1,4 +1,8 @@
-
+/*
+kliorange
+2015.01.22
+http://acm.hust.edu.cn/vjudge/contest/view.action?cid=104406#problem/G
+*/
 #include <stdio.h>
 int T = 0, N = 0, M = 0, u = 0, v = 0;
 struct
